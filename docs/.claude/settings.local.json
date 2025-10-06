@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//e/CC/PicBatch/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
