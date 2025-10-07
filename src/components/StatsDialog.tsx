@@ -71,8 +71,6 @@ export function StatsDialog() {
     }
   }
 
-  if (!stats) return null
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -91,17 +89,23 @@ export function StatsDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* 总体统计 */}
-          <div>
-            <h3 className="text-sm font-semibold mb-3">📊 总体数据</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-lg border p-4">
-                <div className="text-2xl font-bold text-primary">
-                  {stats.totalProcessedImages}
+        {!stats ? (
+          <div className="flex items-center justify-center py-8">
+            <p className="text-muted-foreground">加载统计数据中...</p>
+          </div>
+        ) : (
+          <>
+            <div className="space-y-6">
+            {/* 总体统计 */}
+            <div>
+              <h3 className="text-sm font-semibold mb-3">📊 总体数据</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-lg border p-4">
+                  <div className="text-2xl font-bold text-primary">
+                    {stats.totalProcessedImages}
+                  </div>
+                  <div className="text-sm text-muted-foreground">处理图片数</div>
                 </div>
-                <div className="text-sm text-muted-foreground">处理图片数</div>
-              </div>
               <div className="rounded-lg border p-4">
                 <div className="text-2xl font-bold text-primary">
                   {stats.totalSavedBytes}
@@ -207,18 +211,20 @@ export function StatsDialog() {
               </div>
             </>
           )}
-        </div>
+            </div>
 
-        <DialogFooter className="flex-col sm:flex-row gap-2">
-          <Button variant="outline" onClick={handleExport} className="w-full sm:w-auto">
-            <Download className="mr-2 h-4 w-4" />
-            导出数据
-          </Button>
-          <Button variant="outline" onClick={handleReset} className="w-full sm:w-auto">
-            <RotateCcw className="mr-2 h-4 w-4" />
-            重置统计
-          </Button>
-        </DialogFooter>
+            <DialogFooter className="flex-col sm:flex-row gap-2">
+              <Button variant="outline" onClick={handleExport} className="w-full sm:w-auto">
+                <Download className="mr-2 h-4 w-4" />
+                导出数据
+              </Button>
+              <Button variant="outline" onClick={handleReset} className="w-full sm:w-auto">
+                <RotateCcw className="mr-2 h-4 w-4" />
+                重置统计
+              </Button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   )
