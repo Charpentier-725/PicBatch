@@ -1,5 +1,41 @@
 # 更新日志
 
+## [Version 1.2] - 开发中 🚧
+
+### 📱 微信小程序版本
+
+**状态**: 基础架构搭建完成 (25% 完成)
+**预计发布**: Q1 2026
+
+#### 已完成
+- 🏗️ **Monorepo 架构** - packages/shared + packages/miniprogram 结构
+- 📦 **共享代码包** - 提取平台无关的核心算法
+  - 裁剪算法 (`calculateCropArea`)
+  - 重命名逻辑 (`generateNewFilename`)
+  - 压缩算法 (`compress-core.ts`)
+  - 类型定义 (`types.ts`)
+- 📱 **Taro 项目骨架** - 配置文件和基础结构
+- 📚 **完整文档**
+  - [技术方案](docs/version-1.2-plan.md) (582 行)
+  - [实施指南](docs/version-1.2-implementation-guide.md) (400+ 行)
+  - [进度跟踪](docs/version-1.2-progress.md)
+
+#### 进行中
+- ⏳ Taro 应用入口文件
+- ⏳ 主页面 UI 实现
+- ⏳ 图片处理逻辑适配
+
+#### 待开发
+- [ ] 核心功能 (格式转换、裁剪、重命名、压缩)
+- [ ] 存储与分享 (保存相册、历史记录、微信分享)
+- [ ] UI 适配 (Taro UI、深色模式、响应式)
+- [ ] 性能优化 (分包加载、懒加载)
+- [ ] 测试与发布 (真机测试、微信审核)
+
+**技术栈**: Taro 4.0 + React 18 + TypeScript + Taro UI
+
+---
+
 ## [Version 1.1] - 2025-10-07
 
 ### 🎉 重大更新
