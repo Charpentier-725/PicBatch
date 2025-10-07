@@ -7,6 +7,8 @@ import { cropImage } from '@/lib/crop';
 import { generateNewFilename } from '@/lib/rename';
 import { historyDB } from '@/lib/historyDB';
 import { useToast } from '@/hooks/use-toast';
+import { trackImageProcessing } from '@/lib/analytics';
+import { feedbackMessages } from '@/lib/feedback';
 
 export function useImageProcessor() {
   const {
@@ -87,9 +89,9 @@ export function useImageProcessor() {
 
   const processAllFiles = useCallback(async () => {
     if (files.length === 0) {
+      const message = feedbackMessages.process.noFiles;
       toast({
-        title: '没有文件',
-        description: '请先上传图片',
+        ...message,
         variant: 'destructive',
       });
       return;
@@ -102,13 +104,14 @@ export function useImageProcessor() {
     const total = pendingFiles.length;
 
     if (total === 0) {
-      toast({
-        title: '没有待处理的文件',
-        description: '所有文件已处理完成',
-      });
+      const message = feedbackMessages.process.noPendingFiles;
+      toast(message);
       setProcessing(false);
       return;
     }
+
+    // 显示开始提示
+    toast(feedbackMessages.process.starting);
 
     const startTime = Date.now();
 
@@ -124,6 +127,7 @@ export function useImageProcessor() {
       const successFiles = files.filter((f) => f.status === FileStatus.SUCCESS);
       const totalSize = successFiles.reduce((sum, f) => sum + f.originalSize, 0);
       const compressedSize = successFiles.reduce((sum, f) => sum + (f.compressedSize || 0), 0);
+      const savedBytes = totalSize - compressedSize;
 
       await historyDB.saveRecord({
         fileCount: total,
@@ -138,15 +142,27 @@ export function useImageProcessor() {
         compressionRatio: Math.round((1 - compressedSize / totalSize) * 100),
         processingTime,
       });
+
+      // 记录使用统计
+      trackImageProcessing({
+        count: successFiles.length,
+        savedBytes: savedBytes > 0 ? savedBytes : 0,
+        processingTime: processingTime / 1000, // 转换为秒
+        outputFormat,
+        compressionMode,
+        cropRatio: cropOptions.enabled ? cropOptions.ratio : undefined,
+        useRename: renameOptions.enabled,
+      });
     } catch (error) {
       console.error('Failed to save history:', error);
     }
 
     setProcessing(false);
-    toast({
-      title: '处理完成',
-      description: `成功处理 ${total} 个文件`,
-    });
+
+    // 显示完成提示（包含处理时间）
+    const timeInSeconds = processingTime / 1000;
+    const message = feedbackMessages.process.completed(total, timeInSeconds);
+    toast(message);
   }, [
     files,
     processFile,

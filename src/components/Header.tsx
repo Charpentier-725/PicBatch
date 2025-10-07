@@ -1,5 +1,6 @@
 import { ThemeToggle } from './ThemeToggle';
 import { HistoryDialog } from './HistoryDialog';
+import { StatsDialog } from './StatsDialog';
 
 export function Header() {
   return (
@@ -15,6 +16,7 @@ export function Header() {
           </div>
         </div>
         <nav className="flex items-center gap-2 sm:gap-4">
+          <StatsDialog />
           <HistoryDialog />
           <a href="#features" className="hidden sm:inline text-sm hover:text-primary transition-colors">
             功能

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Header } from '@/components/Header';
 import { FileUploader } from '@/components/FileUploader';
 import { FileList } from '@/components/FileList';
@@ -5,8 +6,14 @@ import { ToolPanel } from '@/components/ToolPanel';
 import { ProcessButton } from '@/components/ProcessButton';
 import { DownloadButton } from '@/components/DownloadButton';
 import { Toaster } from '@/components/ui/toaster';
+import { trackSession } from '@/lib/analytics';
 
 function App() {
+  // 记录会话
+  useEffect(() => {
+    trackSession();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
