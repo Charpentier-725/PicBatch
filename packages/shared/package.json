@@ -1,0 +1,20 @@
+{
+  "name": "@picbatch/shared",
+  "version": "1.2.0",
+  "description": "Shared logic for PicBatch web and miniprogram",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": ["image", "processing", "shared"],
+  "author": "PicBatch Team",
+  "license": "MIT",
+  "dependencies": {
+    "date-fns": "^4.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

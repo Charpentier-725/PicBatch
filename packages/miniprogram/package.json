@@ -1,0 +1,65 @@
+{
+  "name": "@picbatch/miniprogram",
+  "version": "1.2.0",
+  "private": true,
+  "description": "PicBatch WeChat Mini Program",
+  "templateInfo": {
+    "name": "default",
+    "typescript": true,
+    "css": "sass"
+  },
+  "scripts": {
+    "build:weapp": "taro build --type weapp",
+    "build:swan": "taro build --type swan",
+    "build:alipay": "taro build --type alipay",
+    "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:swan": "npm run build:swan -- --watch",
+    "dev:alipay": "npm run build:alipay -- --watch"
+  },
+  "browserslist": [
+    "last 3 versions",
+    "Android >= 4.1",
+    "ios >= 8"
+  ],
+  "author": "PicBatch Team",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.21.5",
+    "@picbatch/shared": "file:../shared",
+    "@tarojs/components": "^4.0.10",
+    "@tarojs/helper": "^4.0.10",
+    "@tarojs/plugin-framework-react": "^4.0.10",
+    "@tarojs/plugin-platform-weapp": "^4.0.10",
+    "@tarojs/react": "^4.0.10",
+    "@tarojs/runtime": "^4.0.10",
+    "@tarojs/shared": "^4.0.10",
+    "@tarojs/taro": "^4.0.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "taro-ui": "^3.2.0",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-react": "^7.18.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
+    "@tarojs/cli": "^4.0.10",
+    "@tarojs/taro-loader": "^4.0.10",
+    "@tarojs/webpack5-runner": "^4.0.10",
+    "@types/react": "^18.3.5",
+    "@types/webpack-env": "^1.18.0",
+    "babel-preset-taro": "^4.0.10",
+    "css-loader": "^6.7.3",
+    "eslint-config-taro": "^4.0.10",
+    "postcss": "^8.4.33",
+    "react-refresh": "^0.14.0",
+    "sass": "^1.77.8",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1",
+    "stylelint": "^16.2.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^5.6.3",
+    "webpack": "^5.78.0"
+  }
+}
