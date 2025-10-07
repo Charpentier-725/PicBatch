@@ -35,12 +35,12 @@ function calculateCropArea(width, height, options) {
 }
 
 // Simplified filename generation
-function generateNewFilename(originalFilename, index, options) {
+function generateNewFilename(originalFilename, index, options, extension?) {
   if (!options || !options.enabled) {
     return originalFilename
   }
 
-  const ext = originalFilename.split('.').pop()
+  const ext = extension || originalFilename.split('.').pop()
   const sequence = String(index + 1).padStart(options.sequenceDigits || 3, '0')
   return `${options.prefix || ''}${options.prefix ? '_' : ''}${sequence}.${ext}`
 }
