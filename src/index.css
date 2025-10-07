@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 30 40% 98%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -14,7 +14,7 @@
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
+    --muted: 30 30% 95%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -55,5 +55,49 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Morandi gradient styles */
+@layer utilities {
+  .gradient-logo { background: linear-gradient(135deg, #D4A59A 0%, #B89CB5 100%); }
+  .shadow-logo { box-shadow: 0 4px 12px rgba(201, 180, 198, 0.25); }
+}
+
+/* 克制优雅的 Anthropic 风格动画 */
+@layer utilities {
+  .hover-lift {
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* 按钮轻微放大效果 */
+  .hover-scale {
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Logo 手绘装饰 - 极轻微 */
+  .logo-decoration::after {
+    content: "✧";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    font-size: 10px;
+    color: #B89CB5;
+    opacity: 0.6;
+    animation: sparkle 3s ease-in-out infinite;
+  }
+  
+  @keyframes sparkle {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
   }
 }

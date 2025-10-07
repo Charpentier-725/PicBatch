@@ -7,8 +7,8 @@ export function Header() {
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <span className="text-xl font-bold text-primary-foreground">轻</span>
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-3xl gradient-logo shadow-logo hover-scale logo-decoration">
+            <span className="text-xl font-bold text-white">轻</span>
           </div>
           <div>
             <h1 className="text-xl font-bold">轻图 PicBatch</h1>
