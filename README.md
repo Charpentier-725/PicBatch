@@ -162,9 +162,14 @@ export async function convertSVG(file: File): Promise<File> {
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 开启 Pull Request
 
-## 📝 开发日志
+## 📚 文档
 
-详见 [CHANGELOG.md](CHANGELOG.md)
+- **[用户使用指南](docs/user-guide.md)** - 详细的功能说明和使用教程
+- **[实现路线图](docs/implementation-roadmap.md)** - 开发计划和技术方案
+- **[部署指南](docs/deployment-guide.md)** - Vercel 部署步骤
+- **[项目完成报告](docs/project-completion-report.md)** - MVP 1.0 总结
+- **[最终交付清单](docs/final-delivery-checklist.md)** - 交付验收清单
+- **[变更日志](CHANGELOG.md)** - 版本更新记录
 
 ## 📄 许可证
 
