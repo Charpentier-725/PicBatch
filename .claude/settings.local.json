@@ -19,7 +19,9 @@
       "Bash(timeout 120 npm run build:weapp)",
       "Bash(taskkill:*)",
       "Bash(dir:*)",
-      "Bash([ ! -f \"e:/CC/PicBatch/VERCEL_DEPLOYMENT.md\" ])"
+      "Bash([ ! -f \"e:/CC/PicBatch/VERCEL_DEPLOYMENT.md\" ])",
+      "Bash(npx @vite-pwa/assets-generator:*)",
+      "Bash(npm run preview:*)"
     ],
     "deny": [],
     "ask": []
