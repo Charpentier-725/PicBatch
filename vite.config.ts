@@ -33,10 +33,12 @@ export default defineConfig({
             '@radix-ui/react-separator',
             '@radix-ui/react-alert-dialog',
           ],
-          'vendor-image': ['browser-image-compression', 'heic2any'],
+          // browser-image-compression 使用动态导入，不在这里打包
+          'vendor-image': ['heic2any'],
           'vendor-zip': ['jszip', 'file-saver'],
         },
       },
     },
+    chunkSizeWarningLimit: 600, // 提高警告阈值
   },
 })

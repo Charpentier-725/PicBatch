@@ -15,7 +15,11 @@
       "Bash(git push:*)",
       "Bash(npx shadcn@latest add:*)",
       "Bash(pnpm:*)",
-      "Bash(npm run build:weapp:*)"
+      "Bash(npm run build:weapp:*)",
+      "Bash(timeout 120 npm run build:weapp)",
+      "Bash(taskkill:*)",
+      "Bash(dir:*)",
+      "Bash([ ! -f \"e:/CC/PicBatch/VERCEL_DEPLOYMENT.md\" ])"
     ],
     "deny": [],
     "ask": []
