@@ -3,47 +3,14 @@ import { View, Image, Button } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import SettingsPanel from '../../components/SettingsPanel'
 import { processImages, saveImagesToAlbum } from '../../lib/imageProcessor'
+import { CropOptions, RenameOptions, ProcessSettings, UploadedFile } from '../../types'
 import './index.scss'
 
-type CropRatio = '1:1' | '16:9' | '4:3' | '3:2' | 'custom' | 'none'
-type CropPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-
-interface CropOptions {
-  enabled: boolean
-  ratio: CropRatio
-  position: CropPosition
-  customWidth?: number
-  customHeight?: number
-}
-
-interface RenameOptions {
-  enabled: boolean
-  prefix: string
-  suffix: string
-  keepOriginalName: boolean
-  useSequence: boolean
-  sequenceStart: number
-  sequenceDigits: 1 | 2 | 3
-}
-
-interface UploadedFile {
-  path: string
-  name: string
-  size: number
-}
-
-interface ProcessSettings {
-  outputFormat: 'jpg' | 'png' | 'webp'
-  quality: number
-  cropOptions: CropOptions
-  renameOptions: RenameOptions
-}
-
 export default function Index() {
-  const [files, setFiles] = useState<UploadedFile[]>([])
+  const [files, setFiles] = useState([])
   const [processing, setProcessing] = useState(false)
   const [processProgress, setProcessProgress] = useState(0)
-  const [settings, setSettings] = useState<ProcessSettings>({
+  const [settings, setSettings] = useState({
     outputFormat: 'jpg',
     quality: 85,
     cropOptions: {
@@ -90,7 +57,7 @@ export default function Index() {
   }
 
   // 删除图片
-  const handleRemoveImage = (index: number) => {
+  const handleRemoveImage = (index) => {
     const newFiles = files.filter((_, i) => i !== index)
     setFiles(newFiles)
   }
@@ -109,7 +76,7 @@ export default function Index() {
   }
 
   // 设置变化
-  const handleSettingsChange = (newSettings: ProcessSettings) => {
+  const handleSettingsChange = (newSettings) => {
     setSettings(newSettings)
   }
 

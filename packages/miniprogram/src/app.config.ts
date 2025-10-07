@@ -9,6 +9,7 @@ export default defineAppConfig({
     navigationBarTextStyle: 'black',
     backgroundColor: '#f8f8f8'
   },
+  lazyCodeLoading: 'requiredComponents',
   darkmode: true,
   themeLocation: 'theme.json'
 })

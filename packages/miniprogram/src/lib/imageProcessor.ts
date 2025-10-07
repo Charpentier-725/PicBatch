@@ -1,12 +1,49 @@
 import Taro from '@tarojs/taro'
-import {
-  calculateCropArea,
-  generateNewFilename,
-  getCompressionStrategy,
-  analyzeImageData,
-  type CropOptions,
-  type RenameOptions
-} from '@picbatch/shared'
+import { CropOptions, RenameOptions } from '../types'
+
+// Simplified crop calculation - inline implementation
+function calculateCropArea(width, height, options) {
+  if (!options || !options.enabled || options.ratio === 'none') {
+    return { x: 0, y: 0, width, height }
+  }
+
+  const ratios = {
+    '1:1': 1,
+    '16:9': 16 / 9,
+    '4:3': 4 / 3,
+    '3:2': 3 / 2
+  }
+
+  const targetRatio = ratios[options.ratio] || 1
+  const currentRatio = width / height
+
+  let cropWidth = width
+  let cropHeight = height
+
+  if (currentRatio > targetRatio) {
+    cropWidth = height * targetRatio
+  } else {
+    cropHeight = width / targetRatio
+  }
+
+  return {
+    x: (width - cropWidth) / 2,
+    y: (height - cropHeight) / 2,
+    width: cropWidth,
+    height: cropHeight
+  }
+}
+
+// Simplified filename generation
+function generateNewFilename(originalFilename, index, options) {
+  if (!options || !options.enabled) {
+    return originalFilename
+  }
+
+  const ext = originalFilename.split('.').pop()
+  const sequence = String(index + 1).padStart(options.sequenceDigits || 3, '0')
+  return `${options.prefix || ''}${options.prefix ? '_' : ''}${sequence}.${ext}`
+}
 
 export interface ProcessOptions {
   outputFormat: 'jpg' | 'png' | 'webp'

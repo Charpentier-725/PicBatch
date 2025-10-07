@@ -49,13 +49,39 @@
       padding: 0 16px;
     }
 
-    .rename-tip {
-      margin-top: 16px;
-      padding: 20px;
-      background-color: #f0f4ff;
-      border-radius: 8px;
-      font-size: 24px;
-      color: #667eea;
+    .rename-options {
+      margin-top: 24px;
+
+      .input-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .input-label {
+          font-size: 28px;
+          color: #666;
+          margin-right: 20px;
+          min-width: 140px;
+        }
+
+        .input-field {
+          flex: 1;
+          padding: 20px 24px;
+          background-color: #f8f8f8;
+          border-radius: 8px;
+          font-size: 28px;
+          color: #333;
+        }
+      }
+
+      .rename-preview {
+        margin-top: 16px;
+        padding: 20px 24px;
+        background-color: #f0f4ff;
+        border-radius: 8px;
+        font-size: 24px;
+        color: #667eea;
+      }
     }
   }
 }
