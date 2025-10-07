@@ -6,4 +6,7 @@ dist
 coverage
 .vscode
 .idea
+.claude
 *.log
+packages/miniprogram
+docs/*.md
