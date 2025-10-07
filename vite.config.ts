@@ -18,4 +18,25 @@ export default defineConfig({
       clientFiles: ['./src/App.tsx', './src/main.tsx'],
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-ui': [
+            '@radix-ui/react-slider',
+            '@radix-ui/react-radio-group',
+            '@radix-ui/react-label',
+            '@radix-ui/react-select',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-progress',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-alert-dialog',
+          ],
+          'vendor-image': ['browser-image-compression', 'heic2any'],
+          'vendor-zip': ['jszip', 'file-saver'],
+        },
+      },
+    },
+  },
 })

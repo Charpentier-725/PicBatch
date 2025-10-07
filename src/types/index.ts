@@ -25,7 +25,16 @@ export interface ProcessedFile extends UploadedFile {
   processingTime?: number;
 }
 
-export type OutputFormat = 'jpeg' | 'png' | 'webp';
+export type OutputFormat =
+  | 'jpeg'   // 输出 .jpg (小写)
+  | 'JPEG'   // 输出 .JPG (大写)
+  | 'png'    // 输出 .png (小写)
+  | 'PNG'    // 输出 .PNG (大写)
+  | 'webp'   // 输出 .webp (小写)
+  | 'WEBP'   // 输出 .WEBP (大写)
+  | 'gif'    // 输出 .gif (小写)
+  | 'GIF';   // 输出 .GIF (大写)
+
 export type CompressionMode = 'quality' | 'size';
 
 export interface ConversionOptions {

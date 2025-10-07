@@ -45,6 +45,23 @@ npm run format             # Format code with Prettier
 npm run format:check       # Check code formatting
 ```
 
+### Handling Port Conflicts for Development Server
+
+If port 5173 (Vite dev server) is already in use, automatically terminate the process using that port before starting:
+
+```bash
+# Windows
+netstat -ano | findstr :5173
+taskkill /PID <PID> /F
+npm run dev
+
+# macOS/Linux
+lsof -ti:5173 | xargs kill -9
+npm run dev
+```
+
+**Important**: When starting the development server, always check if port 5173 is occupied. If so, terminate the existing process first, then restart `npm run dev`.
+
 ### Testing the Production Build
 
 **Recommended Approach (Vite Built-in):**
@@ -68,6 +85,22 @@ npx serve dist -p 8000
 npx http-server dist -p 8000
 
 # Then visit http://localhost:8000 in your browser
+```
+
+**Handling Port Conflicts:**
+
+If port 8000 is already in use when starting an HTTP server, automatically terminate the process using that port before restarting:
+
+```bash
+# Windows
+netstat -ano | findstr :8000
+taskkill /PID <PID> /F
+
+# macOS/Linux
+lsof -ti:8000 | xargs kill -9
+
+# Then restart the server
+npx serve dist -p 8000
 ```
 
 **Note**: This is a static website project. Always use Vite's preview or Node-based tools for testing, not Python HTTP servers.
