@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 import { useLaunch } from '@tarojs/taro'
 import './app.scss'
 
-function App({ children }: PropsWithChildren<any>) {
+function App({ children }) {
   useLaunch(() => {
     console.log('PicBatch 小程序启动')
   })

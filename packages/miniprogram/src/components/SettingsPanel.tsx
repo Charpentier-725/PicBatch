@@ -1,7 +1,27 @@
 import { View, Picker, Slider, Switch } from '@tarojs/components'
 import { useState } from 'react'
-import type { CropOptions, RenameOptions, CropRatio } from '@picbatch/shared'
 import './SettingsPanel.scss'
+
+type CropRatio = '1:1' | '16:9' | '4:3' | '3:2' | 'custom' | 'none'
+type CropPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+interface CropOptions {
+  enabled: boolean
+  ratio: CropRatio
+  position: CropPosition
+  customWidth?: number
+  customHeight?: number
+}
+
+interface RenameOptions {
+  enabled: boolean
+  prefix: string
+  suffix: string
+  keepOriginalName: boolean
+  useSequence: boolean
+  sequenceStart: number
+  sequenceDigits: 1 | 2 | 3
+}
 
 interface SettingsPanelProps {
   onSettingsChange: (settings: {

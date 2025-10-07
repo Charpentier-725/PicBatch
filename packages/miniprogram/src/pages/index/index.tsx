@@ -3,8 +3,28 @@ import { View, Image, Button } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import SettingsPanel from '../../components/SettingsPanel'
 import { processImages, saveImagesToAlbum } from '../../lib/imageProcessor'
-import type { CropOptions, RenameOptions } from '@picbatch/shared'
 import './index.scss'
+
+type CropRatio = '1:1' | '16:9' | '4:3' | '3:2' | 'custom' | 'none'
+type CropPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+interface CropOptions {
+  enabled: boolean
+  ratio: CropRatio
+  position: CropPosition
+  customWidth?: number
+  customHeight?: number
+}
+
+interface RenameOptions {
+  enabled: boolean
+  prefix: string
+  suffix: string
+  keepOriginalName: boolean
+  useSequence: boolean
+  sequenceStart: number
+  sequenceDigits: 1 | 2 | 3
+}
 
 interface UploadedFile {
   path: string

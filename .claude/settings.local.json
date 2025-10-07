@@ -14,7 +14,8 @@
       "Bash(git pull:*)",
       "Bash(git push:*)",
       "Bash(npx shadcn@latest add:*)",
-      "Bash(pnpm:*)"
+      "Bash(pnpm:*)",
+      "Bash(npm run build:weapp:*)"
     ],
     "deny": [],
     "ask": []
