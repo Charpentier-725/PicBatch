@@ -57,8 +57,8 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/picbatch.git
-cd picbatch
+git clone https://github.com/Charpentier-725/PicBatch.git
+cd PicBatch
 
 # 安装依赖
 npm install
@@ -178,8 +178,8 @@ MIT License - 详见 [LICENSE](LICENSE)
 
 ## 📮 联系方式
 
-- 问题反馈：[GitHub Issues](https://github.com/your-username/picbatch/issues)
-- 功能建议：[GitHub Discussions](https://github.com/your-username/picbatch/discussions)
+- 问题反馈：[GitHub Issues](https://github.com/Charpentier-725/PicBatch/issues)
+- 功能建议：[GitHub Discussions](https://github.com/Charpentier-725/PicBatch/discussions)
 
 ---
 
