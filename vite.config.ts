@@ -110,8 +110,7 @@ export default defineConfig({
             '@radix-ui/react-separator',
             '@radix-ui/react-alert-dialog',
           ],
-          // browser-image-compression 使用动态导入，不在这里打包
-          'vendor-image': ['heic2any'],
+          // browser-image-compression 和 heic2any 使用动态导入，不在这里打包
           'vendor-zip': ['jszip', 'file-saver'],
         },
       },

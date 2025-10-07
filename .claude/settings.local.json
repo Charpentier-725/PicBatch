@@ -21,7 +21,9 @@
       "Bash(dir:*)",
       "Bash([ ! -f \"e:/CC/PicBatch/VERCEL_DEPLOYMENT.md\" ])",
       "Bash(npx @vite-pwa/assets-generator:*)",
-      "Bash(npm run preview:*)"
+      "Bash(npm run preview:*)",
+      "Bash(echo:*)",
+      "Bash(awk:*)"
     ],
     "deny": [],
     "ask": []
