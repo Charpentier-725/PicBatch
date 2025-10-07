@@ -2,7 +2,7 @@
 
 > 免费、快速、隐私安全的在线图片批量处理工具
 
-[![部署状态](https://img.shields.io/badge/部署-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com)
+[![部署状态](https://img.shields.io/badge/部署-Vercel-black?style=flat-square&logo=vercel)](https://pic-batch.vercel.app)
 [![技术栈](https://img.shields.io/badge/技术栈-React_19-61dafb?style=flat-square&logo=react)](https://react.dev)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
@@ -51,7 +51,7 @@
 
 ### 在线使用
 
-访问 [https://your-domain.vercel.app](https://your-domain.vercel.app)
+访问 **[https://pic-batch.vercel.app](https://pic-batch.vercel.app)** 立即体验！
 
 ### 本地开发
 
