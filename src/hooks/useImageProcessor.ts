@@ -5,6 +5,7 @@ import { convertFormat, getOutputFilename } from '@/lib/imageUtils';
 import { compressBySize } from '@/lib/compression';
 import { cropImage } from '@/lib/crop';
 import { generateNewFilename } from '@/lib/rename';
+import { historyDB } from '@/lib/historyDB';
 import { useToast } from '@/hooks/use-toast';
 
 export function useImageProcessor() {
@@ -109,9 +110,36 @@ export function useImageProcessor() {
       return;
     }
 
+    const startTime = Date.now();
+
     for (let i = 0; i < total; i++) {
       await processFile(pendingFiles[i].id, i);
       setTotalProgress(Math.round(((i + 1) / total) * 100));
+    }
+
+    const processingTime = Date.now() - startTime;
+
+    // 保存处理历史记录
+    try {
+      const successFiles = files.filter((f) => f.status === FileStatus.SUCCESS);
+      const totalSize = successFiles.reduce((sum, f) => sum + f.originalSize, 0);
+      const compressedSize = successFiles.reduce((sum, f) => sum + (f.compressedSize || 0), 0);
+
+      await historyDB.saveRecord({
+        fileCount: total,
+        outputFormat,
+        compressionMode,
+        quality: compressionMode === 'quality' ? quality : undefined,
+        targetSize: compressionMode === 'size' ? targetSize : undefined,
+        cropOptions,
+        renameOptions,
+        totalSize,
+        compressedSize,
+        compressionRatio: Math.round((1 - compressedSize / totalSize) * 100),
+        processingTime,
+      });
+    } catch (error) {
+      console.error('Failed to save history:', error);
     }
 
     setProcessing(false);
@@ -119,7 +147,19 @@ export function useImageProcessor() {
       title: '处理完成',
       description: `成功处理 ${total} 个文件`,
     });
-  }, [files, processFile, setProcessing, setTotalProgress, toast]);
+  }, [
+    files,
+    processFile,
+    setProcessing,
+    setTotalProgress,
+    outputFormat,
+    compressionMode,
+    quality,
+    targetSize,
+    cropOptions,
+    renameOptions,
+    toast,
+  ]);
 
   return {
     processAllFiles,

@@ -1,4 +1,5 @@
 import { ThemeToggle } from './ThemeToggle';
+import { HistoryDialog } from './HistoryDialog';
 
 export function Header() {
   return (
@@ -13,11 +14,12 @@ export function Header() {
             <p className="text-xs text-muted-foreground">免费在线图片批量处理</p>
           </div>
         </div>
-        <nav className="flex items-center gap-4">
-          <a href="#features" className="text-sm hover:text-primary transition-colors">
+        <nav className="flex items-center gap-2 sm:gap-4">
+          <HistoryDialog />
+          <a href="#features" className="hidden sm:inline text-sm hover:text-primary transition-colors">
             功能
           </a>
-          <a href="#about" className="text-sm hover:text-primary transition-colors">
+          <a href="#about" className="hidden sm:inline text-sm hover:text-primary transition-colors">
             关于
           </a>
           <ThemeToggle />
