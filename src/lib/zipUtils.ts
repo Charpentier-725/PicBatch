@@ -15,8 +15,8 @@ export async function createAndDownloadZip(
   files.forEach((file) => {
     if (!file.processedBlob) return;
 
-    // 生成文件名
-    let filename = getOutputFilename(file.name, outputFormat);
+    // 使用处理后的文件名，如果没有则生成默认文件名
+    let filename = file.processedFilename || getOutputFilename(file.name, outputFormat);
 
     // 处理重名
     if (nameCounter.has(filename)) {

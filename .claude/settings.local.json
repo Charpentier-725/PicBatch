@@ -12,7 +12,8 @@
       "Bash(git commit:*)",
       "Bash(git remote add:*)",
       "Bash(git pull:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npx shadcn@latest add:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 import { useStore } from '@/store/useStore';
 import { FileStatus } from '@/types';
-import { convertFormat } from '@/lib/imageUtils';
+import { convertFormat, getOutputFilename } from '@/lib/imageUtils';
 import { compressBySize } from '@/lib/compression';
+import { cropImage } from '@/lib/crop';
+import { generateNewFilename } from '@/lib/rename';
 import { useToast } from '@/hooks/use-toast';
 
 export function useImageProcessor() {
@@ -12,6 +14,8 @@ export function useImageProcessor() {
     quality,
     compressionMode,
     targetSize,
+    cropOptions,
+    renameOptions,
     updateFileStatus,
     updateFileResult,
     setProcessing,
@@ -20,27 +24,42 @@ export function useImageProcessor() {
   const { toast } = useToast();
 
   const processFile = useCallback(
-    async (fileId: string) => {
+    async (fileId: string, index: number) => {
       const file = files.find((f) => f.id === fileId);
       if (!file) return;
 
       try {
         updateFileStatus(fileId, FileStatus.PROCESSING, 0);
 
-        // 1. 格式转换
-        updateFileStatus(fileId, FileStatus.PROCESSING, 30);
-        let blob = await convertFormat(file.file, outputFormat, quality);
+        let currentFile = file.file;
 
-        // 2. 压缩（如果是大小模式）
+        // 1. 裁剪（如果启用）
+        if (cropOptions.enabled) {
+          updateFileStatus(fileId, FileStatus.PROCESSING, 15);
+          currentFile = await cropImage(currentFile, cropOptions);
+        }
+
+        // 2. 格式转换
+        updateFileStatus(fileId, FileStatus.PROCESSING, 40);
+        let blob = await convertFormat(currentFile, outputFormat, quality);
+
+        // 3. 压缩（如果是大小模式）
         if (compressionMode === 'size' && targetSize) {
-          updateFileStatus(fileId, FileStatus.PROCESSING, 60);
+          updateFileStatus(fileId, FileStatus.PROCESSING, 70);
           const tempFile = new File([blob], file.name, { type: blob.type });
           blob = await compressBySize(tempFile, targetSize);
         }
 
-        // 3. 完成
+        // 4. 生成新文件名
+        updateFileStatus(fileId, FileStatus.PROCESSING, 90);
+        const extension = getOutputFilename('', outputFormat).split('.').pop() || 'jpg';
+        const newFilename = renameOptions.enabled
+          ? generateNewFilename(file.name, index, renameOptions, extension)
+          : getOutputFilename(file.name, outputFormat);
+
+        // 5. 完成
         updateFileStatus(fileId, FileStatus.PROCESSING, 100);
-        updateFileResult(fileId, blob, blob.size);
+        updateFileResult(fileId, blob, blob.size, newFilename);
       } catch (error) {
         console.error(`Failed to process ${file.name}:`, error);
         updateFileStatus(fileId, FileStatus.ERROR, 0);
@@ -57,6 +76,8 @@ export function useImageProcessor() {
       quality,
       compressionMode,
       targetSize,
+      cropOptions,
+      renameOptions,
       updateFileStatus,
       updateFileResult,
       toast,
@@ -89,7 +110,7 @@ export function useImageProcessor() {
     }
 
     for (let i = 0; i < total; i++) {
-      await processFile(pendingFiles[i].id);
+      await processFile(pendingFiles[i].id, i);
       setTotalProgress(Math.round(((i + 1) / total) * 100));
     }
 

@@ -18,6 +18,7 @@ export interface UploadedFile {
 export interface ProcessedFile extends UploadedFile {
   progress: number;
   processedBlob?: Blob;
+  processedFilename?: string; // Version 1.1: 处理后的文件名
   error?: string;
   originalSize: number;
   compressedSize?: number;
@@ -37,10 +38,36 @@ export type OutputFormat =
 
 export type CompressionMode = 'quality' | 'size';
 
+// Version 1.1: 裁剪相关类型
+export type CropRatio = '1:1' | '16:9' | '4:3' | '3:2' | 'custom' | 'none';
+export type CropPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+export interface CropOptions {
+  enabled: boolean;
+  ratio: CropRatio;
+  customWidth?: number;
+  customHeight?: number;
+  position: CropPosition;
+}
+
+// Version 1.1: 重命名相关类型
+export interface RenameOptions {
+  enabled: boolean;
+  prefix: string;
+  suffix: string;
+  keepOriginalName: boolean;
+  useSequence: boolean;
+  sequenceStart: number;
+  sequenceDigits: 1 | 2 | 3;
+}
+
 export interface ConversionOptions {
   outputFormat: OutputFormat;
   quality: number;
   compressionMode: CompressionMode;
   targetSize?: number;
   maxWidthOrHeight?: number;
+  // Version 1.1: 新增选项
+  cropOptions?: CropOptions;
+  renameOptions?: RenameOptions;
 }
