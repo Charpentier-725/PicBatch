@@ -23,7 +23,19 @@
       "Bash(npx @vite-pwa/assets-generator:*)",
       "Bash(npm run preview:*)",
       "Bash(echo:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git checkout:*)",
+      "Bash(git config:*)",
+      "Bash(ping:*)",
+      "Bash(curl:*)",
+      "Read(//c/Users/Administrator/.ssh/**)",
+      "Bash(cat:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(ssh:*)",
+      "Read(//c/Users/Administrator/Downloads/**)"
     ],
     "deny": [],
     "ask": []
