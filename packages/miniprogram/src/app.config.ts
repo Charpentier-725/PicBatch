@@ -7,23 +7,22 @@ export default defineAppConfig({
     navigationBarBackgroundColor: '#ffffff',
     navigationBarTitleText: '轻图 - 图片处理',
     navigationBarTextStyle: 'black',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F2EE',
     enablePullDownRefresh: false
   },
-  tabBar: {
-    color: '#666666',
-    selectedColor: '#8B7355',
-    backgroundColor: '#ffffff',
-    borderStyle: 'white',
-    list: [
-      {
-        pagePath: 'pages/index/index',
-        text: '处理',
-        iconPath: 'assets/icons/process.png',
-        selectedIconPath: 'assets/icons/process-active.png'
-      }
-    ]
-  },
+  // 暂时不使用 tabBar（需要图标文件）
+  // tabBar: {
+  //   color: '#666666',
+  //   selectedColor: '#8B7355',
+  //   backgroundColor: '#ffffff',
+  //   borderStyle: 'white',
+  //   list: [
+  //     {
+  //       pagePath: 'pages/index/index',
+  //       text: '处理'
+  //     }
+  //   ]
+  // },
   lazyCodeLoading: 'requiredComponents',
   darkmode: true,
   themeLocation: 'theme.json',

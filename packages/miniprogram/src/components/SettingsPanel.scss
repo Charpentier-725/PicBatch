@@ -1,11 +1,11 @@
 .settings-panel {
-  background-color: #fff;
-  border-radius: 16px;
+  background-color: transparent;
+  border-radius: 16rpx;
   overflow: hidden;
 
   .setting-section {
-    padding: 32px;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 28rpx 0;
+    border-bottom: 1rpx solid rgba(139, 115, 85, 0.1);
 
     &:last-child {
       border-bottom: none;
@@ -15,72 +15,113 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 20rpx;
     }
 
     .section-title {
-      font-size: 32px;
+      font-size: 30rpx;
       font-weight: 600;
-      color: #333;
-      margin-bottom: 24px;
+      color: var(--color-text-primary);
+      margin-bottom: 20rpx;
     }
 
     .picker-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 32px;
-      background-color: #f8f8f8;
-      border-radius: 12px;
+      padding: 24rpx 28rpx;
+      background-color: rgba(139, 115, 85, 0.04);
+      border-radius: 12rpx;
+      transition: background-color 0.2s;
+
+      &:active {
+        background-color: rgba(139, 115, 85, 0.08);
+      }
 
       .label {
-        font-size: 28px;
-        color: #666;
+        font-size: 28rpx;
+        color: var(--color-text-secondary);
       }
 
       .value {
-        font-size: 28px;
-        color: #333;
+        font-size: 28rpx;
+        color: var(--color-primary);
         font-weight: 500;
       }
     }
 
     .slider-container {
-      padding: 0 16px;
+      padding: 0 16rpx;
     }
 
     .rename-options {
-      margin-top: 24px;
+      margin-top: 24rpx;
 
       .input-row {
         display: flex;
         align-items: center;
-        margin-bottom: 16px;
+        margin-bottom: 20rpx;
 
         .input-label {
-          font-size: 28px;
-          color: #666;
-          margin-right: 20px;
-          min-width: 140px;
+          font-size: 28rpx;
+          color: var(--color-text-secondary);
+          margin-right: 20rpx;
+          min-width: 140rpx;
         }
 
         .input-field {
           flex: 1;
-          padding: 20px 24px;
-          background-color: #f8f8f8;
-          border-radius: 8px;
-          font-size: 28px;
-          color: #333;
+          padding: 20rpx 24rpx;
+          background-color: rgba(139, 115, 85, 0.04);
+          border-radius: 12rpx;
+          font-size: 28rpx;
+          color: var(--color-text-primary);
+          border: 1rpx solid transparent;
+          transition: all 0.2s;
+
+          &:focus {
+            background-color: rgba(139, 115, 85, 0.06);
+            border-color: var(--color-primary);
+          }
         }
       }
 
       .rename-preview {
-        margin-top: 16px;
-        padding: 20px 24px;
-        background-color: #f0f4ff;
-        border-radius: 8px;
-        font-size: 24px;
-        color: #667eea;
+        margin-top: 20rpx;
+        padding: 20rpx 24rpx;
+        background-color: rgba(139, 115, 85, 0.08);
+        border-radius: 12rpx;
+        font-size: 26rpx;
+        color: var(--color-primary);
+        border-left: 4rpx solid var(--color-primary);
+      }
+    }
+  }
+}
+
+// 深色模式
+@media (prefers-color-scheme: dark) {
+  .settings-panel {
+    .setting-section {
+      border-bottom-color: rgba(139, 115, 85, 0.15);
+
+      .picker-item {
+        background-color: rgba(139, 115, 85, 0.1);
+
+        &:active {
+          background-color: rgba(139, 115, 85, 0.15);
+        }
+      }
+
+      .rename-options {
+        .input-field {
+          background-color: rgba(139, 115, 85, 0.1);
+          color: #E5E5E5;
+        }
+
+        .rename-preview {
+          background-color: rgba(139, 115, 85, 0.12);
+        }
       }
     }
   }
