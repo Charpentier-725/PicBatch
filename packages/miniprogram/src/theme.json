@@ -2,13 +2,17 @@
   "light": {
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f8f8f8",
-    "backgroundTextStyle": "light"
+    "backgroundColor": "#F5F2EE",
+    "backgroundTextStyle": "light",
+    "backgroundColorTop": "#F5F2EE",
+    "backgroundColorBottom": "#F5F2EE"
   },
   "dark": {
-    "navigationBarBackgroundColor": "#1a1a1a",
+    "navigationBarBackgroundColor": "#1F1F1F",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#000000",
-    "backgroundTextStyle": "dark"
+    "backgroundColor": "#121212",
+    "backgroundTextStyle": "dark",
+    "backgroundColorTop": "#1a1a1a",
+    "backgroundColorBottom": "#121212"
   }
 }

@@ -2,17 +2,17 @@
   "miniprogramRoot": "dist/",
   "projectname": "PicBatch",
   "description": "轻图 - 免费在线图片批量处理工具 (微信小程序版)",
-  "appid": "",
+  "appid": "touristappid",
   "setting": {
     "urlCheck": true,
     "es6": false,
     "enhance": true,
-    "compileHotReLoad": false,
+    "compileHotReLoad": true,
     "postcss": false,
-    "minified": true,
-    "minifyWXML": true,
-    "minifyWXSS": true,
-    "minifyJS": true,
+    "minified": false,
+    "minifyWXML": false,
+    "minifyWXSS": false,
+    "minifyJS": false,
     "uglifyFileName": false,
     "useCompilerPlugins": ["typescript"],
     "lazyCodeLoading": "requiredComponents",
@@ -20,8 +20,48 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "coverView": true,
+    "nodeModules": true,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "bundle": false,
+    "useIsolateContext": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "showShadowRootInWxmlPanel": true,
+    "useStaticServer": true,
+    "checkInvalidKey": true,
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "autoAudits": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "enhance": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false
   },
   "compileType": "miniprogram",
-  "condition": {}
+  "libVersion": "3.5.5",
+  "srcMiniprogramRoot": "dist/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "spaces",
+    "tabSize": 2
+  }
 }

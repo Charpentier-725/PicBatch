@@ -1,12 +1,137 @@
+/**
+ * 轻图 PicBatch 小程序全局样式
+ * Morandi 配色方案 - 温和、低饱和度
+ */
+
+/* 全局变量定义 */
 page {
-  background-color: #f8f8f8;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  font-size: 28px;
+  /* Morandi 配色 */
+  --color-primary: #8B7355; /* 主色：暖棕色 */
+  --color-secondary: #9D8B7C; /* 次要色：浅棕色 */
+  --color-background: #F5F2EE; /* 背景色：米色 */
+  --color-surface: #FFFFFF; /* 表面色：白色 */
+  --color-text-primary: #4A4A4A; /* 主文本：深灰 */
+  --color-text-secondary: #999999; /* 次要文本：中灰 */
+  --color-border: #E5E5E5; /* 边框色 */
+  --color-success: #7A9D7E; /* 成功：柔和绿 */
+  --color-warning: #C9A57B; /* 警告：米黄 */
+  --color-error: #B17C7C; /* 错误：柔和红 */
+
+  /* 字体 */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
   line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+
+  /* 平滑滚动 */
+  scroll-behavior: smooth;
 }
 
+/* 通用容器 */
 .container {
-  padding: 40px 30px;
+  padding: 32rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 通用卡片 */
+.card {
+  background-color: var(--color-surface);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 通用按钮 */
+.btn {
+  padding: 20rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #FFFFFF;
+}
+
+/* 通用文本类 */
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+/* 工具类 */
+.mt-8 { margin-top: 8rpx; }
+.mt-16 { margin-top: 16rpx; }
+.mt-24 { margin-top: 24rpx; }
+.mt-32 { margin-top: 32rpx; }
+
+.mb-8 { margin-bottom: 8rpx; }
+.mb-16 { margin-bottom: 16rpx; }
+.mb-24 { margin-bottom: 24rpx; }
+.mb-32 { margin-bottom: 32rpx; }
+
+.p-8 { padding: 8rpx; }
+.p-16 { padding: 16rpx; }
+.p-24 { padding: 24rpx; }
+.p-32 { padding: 32rpx; }
+
+/* Flex 布局 */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+/* 文本对齐 */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
 }
