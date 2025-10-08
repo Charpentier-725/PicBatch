@@ -99,9 +99,381 @@ VITE_MAX_FILES=50
 
 ---
 
-## 二、验证部署
+## 二、Cloudflare Pages 部署（国内访问优化）
 
-### 2.1 功能测试
+### 2.1 为什么选择 Cloudflare Pages?
+
+**优势对比**:
+
+| 特性 | Cloudflare Pages | Vercel | 阿里云 OSS |
+|------|-----------------|--------|-----------|
+| 价格 | ✅ 完全免费 | ✅ 免费额度 | 💰 按量付费 |
+| 国内访问 | ⭐⭐⭐⭐ 较好 | ⭐⭐ 需翻墙 | ⭐⭐⭐⭐⭐ 最快 |
+| ICP备案 | ❌ 不需要 | ❌ 不需要 | ✅ 必须 |
+| 自动部署 | ✅ 支持 | ✅ 支持 | ❌ 不支持 |
+| CDN | ✅ 全球+中国 | ✅ 全球 | ✅ 中国 |
+
+**推荐场景**: 国内用户访问，不想备案，完全免费
+
+---
+
+### 2.2 部署步骤（详细图文）
+
+#### 步骤 1: 注册 Cloudflare 账号
+
+1. 访问: https://dash.cloudflare.com/sign-up
+2. 填写邮箱和密码（完全免费，无需信用卡）
+3. 验证邮箱（检查收件箱点击确认链接）
+
+#### 步骤 2: 连接 GitHub 仓库
+
+1. 登录 Cloudflare Dashboard
+2. 左侧菜单选择 **Workers & Pages**
+3. 点击右上角 **Create application** 按钮
+4. 选择 **Pages** 标签
+5. 点击 **Connect to Git** 按钮
+6. 选择 **GitHub**，点击授权按钮
+7. 在弹出窗口选择授权范围（建议选择特定仓库）
+8. 选择仓库: `Charpentier-725/PicBatch`
+
+#### 步骤 3: 配置构建设置
+
+**基本配置**:
+```
+Project name: picbatch（或自定义名称）
+Production branch: main
+```
+
+**构建设置**:
+```
+Framework preset: None（或选择 Vite）
+Build command: npm run build
+Build output directory: dist
+Root directory: /（保持默认）
+```
+
+**环境变量**（点击 Add variable 添加）:
+```bash
+NODE_VERSION=18
+```
+
+#### 步骤 4: 开始部署
+
+1. 检查所有配置无误
+2. 点击底部 **Save and Deploy** 按钮
+3. 等待构建完成（约 2-3 分钟）
+4. 构建成功后会自动跳转到项目页面
+5. 你的网站地址：`https://picbatch.pages.dev`
+
+#### 步骤 5: 自定义域名（可选）
+
+**如果你有自己的域名**:
+
+1. 在项目页面点击 **Custom domains** 标签
+2. 点击 **Set up a custom domain** 按钮
+3. 输入域名（如 `www.picbatch.cn`）
+4. 按照提示配置 DNS:
+
+**域名在 Cloudflare 托管**:
+- 自动添加 CNAME 记录，无需手动操作
+
+**域名在其他服务商**:
+- 添加 CNAME 记录:
+  ```
+  类型: CNAME
+  名称: www
+  目标: picbatch.pages.dev
+  TTL: Auto
+  ```
+
+---
+
+### 2.3 自动部署流程
+
+**Git 集成后的自动化**:
+
+每次推送代码到 `main` 分支，Cloudflare 会自动:
+1. 拉取最新代码
+2. 安装依赖 (`npm install`)
+3. 运行构建 (`npm run build`)
+4. 部署到全球 CDN
+5. 发送部署通知
+
+**示例流程**:
+```bash
+# 本地开发
+git add .
+git commit -m "Add new feature"
+git push origin main
+
+# Cloudflare Pages 自动构建部署
+# 1-2分钟后新版本上线
+```
+
+**查看部署状态**:
+- Dashboard → Workers & Pages → picbatch → Deployments
+- 每次部署都有独立 URL，可以预览
+
+---
+
+### 2.4 环境变量管理
+
+**添加环境变量**:
+
+1. 进入项目 Settings → Environment variables
+2. 选择环境类型（Production / Preview）
+3. 添加变量:
+
+**生产环境（Production）**:
+```bash
+VITE_APP_NAME=轻图 PicBatch
+VITE_APP_VERSION=1.0.0
+VITE_MAX_FILE_SIZE=10485760
+VITE_MAX_FILES=50
+```
+
+4. 点击 **Save**
+5. 触发重新部署以生效
+
+---
+
+### 2.5 性能优化配置
+
+#### Cloudflare 自动优化（已启用）
+
+**压缩**:
+- ✅ Brotli 压缩（自动）
+- ✅ Gzip 压缩（自动）
+- ✅ Auto Minify（HTML/CSS/JS）
+
+**加速**:
+- ✅ HTTP/3 & QUIC（最新协议）
+- ✅ 全球 CDN（300+ 节点）
+- ✅ 智能路由（自动选择最快节点）
+
+**安全**:
+- ✅ 自动 HTTPS（Let's Encrypt）
+- ✅ DDoS 防护
+- ✅ Bot 防护
+
+#### 缓存策略
+
+Cloudflare 默认缓存策略:
+```
+HTML: 不缓存（始终获取最新）
+CSS/JS: 缓存 1 年（文件名带 hash）
+图片/字体: 缓存 1 年
+```
+
+**自定义缓存规则**（可选）:
+- 进入项目 → Settings → Functions
+- 添加 `_headers` 文件到 `public/` 目录:
+  ```
+  /assets/*
+    Cache-Control: public, max-age=31536000, immutable
+
+  /*.html
+    Cache-Control: no-cache
+  ```
+
+---
+
+### 2.6 部署管理
+
+#### 版本回滚
+
+**快速回滚到旧版本**:
+
+1. Deployments 标签查看历史部署
+2. 找到稳定版本
+3. 点击 **⋯** → **Rollback to this deployment**
+4. 确认后立即生效（不到 1 分钟）
+
+#### 预览部署
+
+**每个 Pull Request 自动创建预览**:
+
+1. 在 GitHub 创建 PR
+2. Cloudflare 自动构建预览版本
+3. PR 中显示预览链接
+4. 测试通过后合并到 main
+
+---
+
+### 2.7 国内访问优化
+
+#### Cloudflare 中国网络
+
+**免费版已包含部分中国节点**:
+- 自动使用最近的 CDN 节点
+- 国内访问速度通常 < 500ms
+
+**测试国内访问速度**:
+```bash
+# Windows
+ping picbatch.pages.dev
+
+# 或使用 curl 测试响应时间
+curl -o NUL -s -w "Time: %{time_total}s\n" https://picbatch.pages.dev
+```
+
+#### 进一步优化（可选）
+
+**方案 1: Argo Smart Routing**（付费）
+- 费用: $5/月
+- 智能路由，速度提升 30%
+
+**方案 2: 自定义域名 + ICP 备案**
+- 使用 `.cn` 域名
+- 完成 ICP 备案
+- 访问速度最优
+
+---
+
+### 2.8 双平台部署策略
+
+**部署完成后你将拥有两个生产环境**:
+
+| 平台 | 域名 | 国内访问 | 推荐用途 |
+|------|------|---------|---------|
+| Vercel | https://pic-batch.vercel.app | ❌ 需翻墙 | 国外用户、开发预览 |
+| Cloudflare | https://picbatch.pages.dev | ✅ 可访问 | 国内用户、主要流量 |
+
+**SEO 建议**:
+- 选择 Cloudflare Pages 作为主域名
+- 在 Google/Bing 提交 Cloudflare 域名
+- Vercel 域名作为备用
+
+**流量分配**:
+- 国内用户 → Cloudflare Pages
+- 国外用户 → Cloudflare Pages（全球 CDN）
+- 或统一使用 Cloudflare Pages
+
+---
+
+### 2.9 故障排查
+
+#### 问题 1: 构建失败
+
+**症状**: 部署页面显示 "Build failed"
+
+**排查步骤**:
+1. 点击查看构建日志（Deployment details）
+2. 检查错误信息（通常是依赖或命令问题）
+3. 本地测试: `npm install && npm run build`
+4. 确认 Node.js 版本: 添加环境变量 `NODE_VERSION=18`
+
+**常见错误**:
+```bash
+# 错误: 依赖安装失败
+解决: 删除 package-lock.json，重新 push
+
+# 错误: 构建超时
+解决: 优化构建配置，移除不必要的依赖
+```
+
+#### 问题 2: 部署成功但访问 404
+
+**症状**: 页面显示 404 Not Found
+
+**解决方案**:
+1. 确认 **Build output directory** 是 `dist`（不是 `build` 或其他）
+2. 检查构建日志，确认 `dist` 目录有文件
+3. 添加 SPA 路由支持（如使用 React Router）:
+   - 在 `public/` 目录创建 `_redirects` 文件:
+     ```
+     /*    /index.html   200
+     ```
+
+#### 问题 3: 国内访问仍然慢
+
+**优化方案**:
+1. 使用 Cloudflare DNS（自动优化路由）
+2. 开启 **Argo Smart Routing**（$5/月，速度提升 30%）
+3. 使用自定义域名（避免 `.pages.dev` 可能的限制）
+4. 极致性能需求：部署到阿里云 OSS + CDN（需备案）
+
+#### 问题 4: 图片处理失败
+
+**症状**: 上传图片后无法处理
+
+**检查清单**:
+- ✅ 浏览器控制台是否有错误
+- ✅ 确认使用现代浏览器（Chrome 90+）
+- ✅ HEIC 格式需要 polyfill（已包含在项目中）
+- ✅ 检查文件大小限制（默认 10MB）
+
+---
+
+### 2.10 成本估算
+
+**Cloudflare Pages 免费套餐包含**:
+
+✅ **无限制功能**:
+- 静态资源请求: 无限
+- 带宽流量: 无限
+- 自定义域名: 100 个
+- SSL 证书: 自动续期
+
+✅ **限制额度**（对 PicBatch 足够）:
+- 构建次数: 500 次/月
+- 构建时长: 20 分钟/次
+- 并发构建: 1 个
+
+✅ **免费附赠**:
+- 全球 CDN（300+ 节点）
+- DDoS 防护
+- Web 应用防火墙（WAF）
+- 分析统计
+
+**总成本: ¥0/年** 💰
+
+**对比 Vercel 免费套餐**:
+- Vercel: 100GB 带宽/月
+- Cloudflare: 无限带宽
+- **Cloudflare 更划算！**
+
+---
+
+### 2.11 部署清单
+
+#### 部署前检查
+
+- [ ] GitHub 仓库准备完毕
+- [ ] 代码已推送到 `main` 分支
+- [ ] 本地构建测试通过: `npm run build`
+- [ ] Cloudflare 账号已注册并验证邮箱
+- [ ] 确认构建配置:
+  - ✅ Build command: `npm run build`
+  - ✅ Output directory: `dist`
+  - ✅ Node version: 18
+
+#### 部署后验证
+
+- [ ] 访问 `https://picbatch.pages.dev` 成功
+- [ ] **国内不翻墙测试访问**（重要！）
+- [ ] 核心功能测试:
+  - [ ] 图片上传
+  - [ ] 格式转换
+  - [ ] 图片压缩
+  - [ ] 批量下载
+- [ ] 移动端测试（Chrome 手机模式）
+- [ ] 性能测试（Lighthouse > 90）
+- [ ] 自动部署流程测试:
+  - [ ] 推送代码 → 自动构建 → 自动上线
+
+#### SEO 配置（部署后）
+
+- [ ] 提交新域名到 Google Search Console
+- [ ] 提交新域名到 Bing Webmaster
+- [ ] 更新 sitemap.xml（如有多个域名）
+- [ ] 配置主域名（Canonical URL）
+
+---
+
+## 三、验证部署
+
+### 3.1 功能测试
 
 部署成功后,检查以下项:
 
@@ -111,7 +483,7 @@ VITE_MAX_FILES=50
 - [ ] 下载功能正常
 - [ ] 移动端显示正常
 
-### 2.2 性能测试
+### 3.2 性能测试
 
 运行 Lighthouse 测试:
 
@@ -128,7 +500,7 @@ lighthouse https://your-domain.vercel.app --view
 - Best Practices: >95
 - SEO: >95
 
-### 2.3 浏览器兼容性
+### 3.3 浏览器兼容性
 
 测试以下浏览器:
 - [ ] Chrome (最新版)
@@ -139,23 +511,23 @@ lighthouse https://your-domain.vercel.app --view
 
 ---
 
-## 三、监控和维护
+## 四、监控和维护
 
-### 3.1 Vercel Analytics
+### 4.1 Vercel Analytics
 
 在 Vercel Dashboard 启用 Analytics 查看:
 - 访问量统计
 - 性能指标
 - 用户地理分布
 
-### 3.2 错误监控
+### 4.2 错误监控
 
 查看 Vercel Dashboard → Logs 监控:
 - 构建日志
 - 运行时错误
 - 请求日志
 
-### 3.3 自动部署
+### 4.3 自动部署
 
 GitHub 集成后,每次推送到 main 分支会自动触发部署:
 
@@ -166,7 +538,7 @@ git push origin main
 # Vercel 自动部署
 ```
 
-### 3.4 回滚部署
+### 4.4 回滚部署
 
 如果需要回滚到之前的版本:
 
@@ -176,9 +548,9 @@ git push origin main
 
 ---
 
-## 四、性能优化
+## 五、性能优化
 
-### 4.1 已启用的优化
+### 5.1 已启用的优化
 
 **Brotli 压缩**: Vercel 默认启用,无需配置
 
@@ -188,7 +560,7 @@ git push origin main
 
 **CDN 加速**: Vercel 自动使用全球 CDN
 
-### 4.2 构建优化
+### 5.2 构建优化
 
 **代码分割**: 6 个优化 chunks
 
@@ -217,16 +589,16 @@ export default defineConfig({
 
 ---
 
-## 五、搜索引擎优化 (SEO)
+## 六、搜索引擎优化 (SEO)
 
-### 5.1 为什么要主动提交?
+### 6.1 为什么要主动提交?
 
 - ✅ 加快收录 (从 2-4 周缩短到 3-7 天)
 - ✅ 监控数据 (查看搜索关键词、点击量)
 - ✅ 优化建议 (搜索引擎提供的优化建议)
 - ✅ 问题排查 (及时发现收录问题)
 
-### 5.2 百度站长平台 (推荐国内用户)
+### 6.2 百度站长平台 (推荐国内用户)
 
 #### 步骤 1: 注册并登录
 
@@ -266,7 +638,7 @@ export default defineConfig({
 
 ---
 
-### 5.3 Google Search Console
+### 6.3 Google Search Console
 
 #### 步骤 1: 注册并登录
 
@@ -310,7 +682,7 @@ export default defineConfig({
 
 ---
 
-### 5.4 必应站长工具 (Bing Webmaster)
+### 6.4 必应站长工具 (Bing Webmaster)
 
 #### 步骤 1: 注册并登录
 
@@ -350,7 +722,7 @@ export default defineConfig({
 
 ---
 
-### 5.5 SEO 优先级
+### 6.5 SEO 优先级
 
 | 搜索引擎 | 国内用户 | 国外用户 | 预计时间 |
 |---------|---------|---------|---------|
@@ -360,7 +732,7 @@ export default defineConfig({
 
 ---
 
-## 六、常见问题
+## 七、常见问题
 
 ### Q: 部署失败怎么办?
 
@@ -392,7 +764,7 @@ export default defineConfig({
 
 ---
 
-## 七、成本估算
+## 八、成本估算
 
 ### Vercel 免费套餐包含:
 
@@ -406,7 +778,7 @@ export default defineConfig({
 
 ---
 
-## 八、部署清单
+## 九、部署清单
 
 部署前确认:
 
@@ -421,9 +793,9 @@ export default defineConfig({
 
 ---
 
-## 九、应急预案
+## 十、应急预案
 
-### 9.1 生产环境故障
+### 10.1 生产环境故障
 
 **检查清单**:
 1. 访问 Vercel Status: https://www.vercel-status.com
@@ -431,7 +803,7 @@ export default defineConfig({
 3. 回滚到上一个稳定版本
 4. 联系 Vercel 支持
 
-### 9.2 性能降级
+### 10.2 性能降级
 
 **处理步骤**:
 1. 检查 Vercel Analytics
