@@ -136,26 +136,127 @@ VITE_MAX_FILES=50
 7. 在弹出窗口选择授权范围（建议选择特定仓库）
 8. 选择仓库: `Charpentier-725/PicBatch`
 
-#### 步骤 3: 配置构建设置
+#### 步骤 3: 配置构建设置（重要！）
 
-**基本配置**:
+**在哪里配置？**
+连接 GitHub 仓库后，会自动跳转到"设置构建配置"页面。如果没跳转，在项目页面点击 **Settings** → **Build & deployments**。
+
+---
+
+**① 基本配置区域**（页面顶部）:
+
+找到 **"Set up builds and deployments"** 区域，填写：
+
+| 字段 | 在哪里 | 填什么 | 说明 |
+|------|--------|--------|------|
+| **Project name** | 第一个输入框 | `picbatch` | 网址会是 `picbatch.pages.dev`，可自定义 |
+| **Production branch** | 下拉选择框 | `main` | 选择主分支（默认已选好） |
+
+**截图位置示例**：
 ```
-Project name: picbatch（或自定义名称）
+┌─────────────────────────────────────┐
+│ Project name: [picbatch________]    │  ← 在这里输入项目名
+│ Production branch: [main ▼]         │  ← 确认是 main 分支
+└─────────────────────────────────────┘
+```
+
+---
+
+**② 构建设置区域**（页面中部）:
+
+找到 **"Build settings"** 区域，配置如下：
+
+| 字段 | 在哪里 | 填什么 | 为什么 |
+|------|--------|--------|--------|
+| **Framework preset** | 下拉框 | 选择 `Vite` 或 `None` | Vite 会自动填充命令，None 需要手动填 |
+| **Build command** | 输入框 | `npm run build` | 构建生产版本的命令 |
+| **Build output directory** | 输入框 | `dist` | Vite 默认输出目录 |
+| **Root directory (optional)** | 输入框 | 留空或 `/` | 项目根目录，默认就好 |
+
+**⚠️ 重点：Build output directory 必须是 `dist`！**
+
+**截图位置示例**：
+```
+┌─────────────────────────────────────────┐
+│ Build settings                          │
+│                                         │
+│ Framework preset: [Vite ▼]             │  ← 选择 Vite（或 None）
+│                                         │
+│ Build command:                          │
+│ [npm run build_________________]        │  ← 输入这个命令
+│                                         │
+│ Build output directory:                 │
+│ [dist___________________________]        │  ← 必须是 dist！
+│                                         │
+│ Root directory (optional):              │
+│ [/_____________________________]         │  ← 保持默认
+└─────────────────────────────────────────┘
+```
+
+---
+
+**③ 环境变量区域**（可选，在页面底部）:
+
+找到 **"Environment variables"** 区域，点击 **"Add variable"** 按钮：
+
+**如何添加环境变量：**
+
+1. 点击 **"+ Add variable"** 按钮
+2. 会出现两个输入框：
+
+| 字段 | 填什么 |
+|------|--------|
+| **Variable name** | `NODE_VERSION` |
+| **Value** | `18` |
+
+3. 点击变量右侧的 **"Add"** 按钮保存
+
+**截图位置示例**：
+```
+┌─────────────────────────────────────────┐
+│ Environment variables (optional)        │
+│                                         │
+│ [+ Add variable]  ← 点击这个按钮         │
+│                                         │
+│ ┌─────────────────────────────────────┐│
+│ │ Variable name: [NODE_VERSION_____] ││  ← 输入变量名
+│ │ Value:        [18_________________] ││  ← 输入值
+│ │                           [Add]     ││  ← 点击保存
+│ └─────────────────────────────────────┘│
+└─────────────────────────────────────────┘
+```
+
+**为什么要设置 NODE_VERSION=18？**
+- 确保使用 Node.js 18 版本构建
+- 避免版本不兼容导致构建失败
+
+---
+
+**完整配置示例（复制粘贴用）：**
+
+```
+【基本配置】
+Project name: picbatch
 Production branch: main
-```
 
-**构建设置**:
-```
-Framework preset: None（或选择 Vite）
+【构建设置】
+Framework preset: Vite
 Build command: npm run build
 Build output directory: dist
-Root directory: /（保持默认）
+Root directory: /
+
+【环境变量】
+NODE_VERSION = 18
 ```
 
-**环境变量**（点击 Add variable 添加）:
-```bash
-NODE_VERSION=18
-```
+---
+
+**配置完成后的操作：**
+
+1. **检查所有配置**（特别是 `dist` 目录）
+2. 滚动到页面底部
+3. 点击 **"Save and Deploy"** 大按钮
+4. 等待 2-3 分钟，构建完成！
 
 #### 步骤 4: 开始部署
 
