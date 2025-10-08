@@ -35,7 +35,8 @@
       "Bash(cat:*)",
       "Bash(git remote set-url:*)",
       "Bash(ssh:*)",
-      "Read(//c/Users/Administrator/Downloads/**)"
+      "Read(//c/Users/Administrator/Downloads/**)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []

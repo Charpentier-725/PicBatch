@@ -181,11 +181,12 @@ export async function convertSVG(file: File): Promise<File> {
 
 ## 📚 文档
 
-- **[用户使用指南](docs/user-guide.md)** - 详细的功能说明和使用教程
-- **[实现路线图](docs/implementation-roadmap.md)** - 开发计划和技术方案
-- **[部署指南](docs/deployment-guide.md)** - Vercel 部署步骤
-- **[项目完成报告](docs/project-completion-report.md)** - MVP 1.0 总结
-- **[最终交付清单](docs/final-delivery-checklist.md)** - 交付验收清单
+- **[用户使用指南](docs/USER_GUIDE.md)** - 详细的功能说明和使用教程
+- **[产品设计](docs/PRODUCT.md)** - 产品需求与设计系统
+- **[技术架构](docs/ARCHITECTURE.md)** - 技术栈与架构设计
+- **[开发指南](docs/DEVELOPMENT.md)** - 开发路线图与规范
+- **[部署指南](docs/DEPLOYMENT.md)** - Vercel 部署与 SEO 优化
+- **[版本计划](docs/versions/)** - 版本迭代计划
 - **[变更日志](CHANGELOG.md)** - 版本更新记录
 
 ## 📄 许可证
