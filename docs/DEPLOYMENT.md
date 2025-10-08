@@ -876,5 +876,7 @@ export default defineConfig({
 ---
 
 **最后更新**: 2025-10-08
-**部署状态**: ✅ 已成功部署
-**生产地址**: https://pic-batch.vercel.app
+**部署状态**: ✅ 已成功部署（双平台）
+**生产地址**:
+- Vercel: https://pic-batch.vercel.app（国外访问）
+- Cloudflare Pages: https://picbatch.pages.dev（国内访问）✨
